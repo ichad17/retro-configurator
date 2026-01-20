@@ -1,0 +1,6 @@
+@RetroConfigurator.API_HostAddress = http://localhost:5282
+
+GET {{RetroConfigurator.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
