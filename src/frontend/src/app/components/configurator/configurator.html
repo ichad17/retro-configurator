@@ -1,0 +1,88 @@
+<div class="configurator-container">
+  <h1>Retro Console Configurator</h1>
+  
+  <div class="success-message" *ngIf="orderCreated">
+    <h2>✓ Order Created Successfully!</h2>
+    <p>Order ID: {{ orderId }}</p>
+    <p>Total: ${{ calculatedPrice.toFixed(2) }}</p>
+  </div>
+
+  <div class="error-message" *ngIf="error">
+    <p>{{ error }}</p>
+  </div>
+
+  <form (ngSubmit)="createOrder()" *ngIf="!orderCreated">
+    <div class="form-group">
+      <label for="console">Select Console:</label>
+      <select 
+        id="console" 
+        [(ngModel)]="selectedConsole" 
+        name="console"
+        (change)="updatePrice()">
+        <option *ngFor="let console of consoleTypes" [value]="console.value">
+          {{ console.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="controllers">Number of Controllers (1-4):</label>
+      <input 
+        type="number" 
+        id="controllers" 
+        [(ngModel)]="numberOfControllers" 
+        name="controllers"
+        min="1" 
+        max="4"
+        (change)="updatePrice()" />
+    </div>
+
+    <div class="form-group checkbox">
+      <label>
+        <input 
+          type="checkbox" 
+          [(ngModel)]="hdmiSupport" 
+          name="hdmi"
+          (change)="updatePrice()" />
+        HDMI Support (+$49.99)
+      </label>
+    </div>
+
+    <div class="form-group checkbox">
+      <label>
+        <input 
+          type="checkbox" 
+          [(ngModel)]="customColor" 
+          name="customColor"
+          (change)="updatePrice()" />
+        Custom Color (+$29.99)
+      </label>
+    </div>
+
+    <div class="form-group" *ngIf="customColor">
+      <label for="color">Select Color:</label>
+      <input 
+        type="color" 
+        id="color" 
+        [(ngModel)]="colorHex" 
+        name="color" />
+    </div>
+
+    <div class="price-display">
+      <h2>Total Price: ${{ calculatedPrice.toFixed(2) }}</h2>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Your Email:</label>
+      <input 
+        type="email" 
+        id="email" 
+        [(ngModel)]="customerEmail" 
+        name="email"
+        placeholder="your.email@example.com"
+        required />
+    </div>
+
+    <button type="submit" class="submit-button">Create Order</button>
+  </form>
+</div>
